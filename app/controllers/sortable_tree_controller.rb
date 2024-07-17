@@ -23,7 +23,9 @@ module SortableTreeController
           #options[:parent_method] ||= 'parent'
 
           records = params[:cat].to_unsafe_h.inject({}) do |res, (resource, parent_resource)|
-            res[resource_class.find(resource)] = resource_class.find(parent_resource) rescue nil
+            modified_resource = resource.gsub("_", "-")
+            modified_parent_resource = parent_resource.gsub("_", "-")
+            res[resource_class.find(modified_resource)] = resource_class.find(modified_parent_resource) rescue nil
             res
           end
 
